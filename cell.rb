@@ -8,10 +8,10 @@ class Cell
 
   ##
   # Initializes a cell object.
-  def initialize(x, y)
+  def initialize(x, y, walls = [])
     @x = x
     @y = y
-    @walls = []
+    @walls = walls
   end
 
   ##
