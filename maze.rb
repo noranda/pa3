@@ -24,12 +24,13 @@ class Maze
   ##
   # Loads a maze with the given string argument of 0's (for spaces) and 1's (for walls).
   def load(string_maze)
-    string_maze.split('').map(&:to_i).map do |n|
+    binary_array = string_maze.split('').map(&:to_i)
+    binary_array.each do |n|
       @cells.each_with_index do |row, index_row|
         row.each_with_index do |cell, index_col|
           cell_index = get_cell_index(index_row, index_col)
-          cell.connect_right_cell(@cells[index_row][index_col + 1]) if cell_index + 1 == 0
-          cell.connect_top_cell(@cells[index_row - 1][index_col]) if cell_index - (@width * 2 + 1) == 0
+          cell.connect_cells(@cells[index_row][index_col + 1]) if binary_array[cell_index + 1] == 0
+          cell.connect_cells(@cells[index_row - 1][index_col]) if binary_array[cell_index - (@width * 2 + 1)] == 0
         end
       end
     end
@@ -64,7 +65,7 @@ class Maze
   ##
   # Returns the cell index of a cell in a given row and col index.
   def get_cell_index(index_row, index_col)
-    cell_row_index = width * 2 * (index_row * 2 + 1)
+    cell_row_index = @width * 2 * (index_row * 2 + 1)
     offset =  (index_row * 2 + 2) + (index_col * 2)
     cell_row_index + offset
   end

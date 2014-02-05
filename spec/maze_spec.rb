@@ -21,7 +21,7 @@ describe Maze do
   context '#load' do
     it 'can load in a maze from a string representation' do
       $stdout.should_receive(:puts).with("+-+-+-+-+\n|   |   |\n+-+ + + +\n|   | | |\n+ +-+ + +\n|     | |\n+-+ +-+ +\n|     | |\n+-+-+-+-+\n\n")
-      m = Maze.new
+      m = Maze.new(4, 4)
       m.load('11111111110001000111101010110001010110111010110000010111101110110000010111111111')
       m.display
     end
@@ -44,5 +44,12 @@ describe Maze do
 
   context '#redesign' do
     
+  end
+
+  context '#get_cell_index' do
+    it 'can get the cell index from the string representation for a cell' do
+      m = Maze.new
+      expect(m.get_cell_index(1, 1)).to eq(24)
+    end
   end
 end

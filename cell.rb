@@ -43,18 +43,9 @@ class Cell
   end
 
   ##
-  # Connects the cell to it's right cell and it's right cell to the cell. Assumes there
-  # is a cell to the right and that it is connected.
-  def connect_right_cell(right_cell)
-    cell.connected_cells << right_cell
-    right_cell.connected_cells << cell
-  end
-
-  ##
-  # Connects the given cell to it's top cell and it's top cell to the cell. Assumes there
-  # is a cell to the top and that it is connected.
-  def connect_top_cell(top_cell)
-    cell.connected_cells << top_cell
-    top_cell.connected_cells << cell
+  # Connects the cell to the given cell and the given cell to the cell.
+  def connect_cells(cell)
+    @connected_cells << cell
+    cell.connected_cells << self
   end
 end
