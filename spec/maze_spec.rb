@@ -1,6 +1,6 @@
 # maze_spec.rb
 # Written by: Noranda Brown
-# Version: 2014.2.2
+# Version: 2014.2.5
 
 require 'spec_helper'
 require_relative '../maze'
@@ -19,7 +19,12 @@ describe Maze do
   end
 
   context '#load' do
-
+    it 'can load in a maze from a string representation' do
+      $stdout.should_receive(:puts).with("+-+-+-+-+\n|   |   |\n+-+ + + +\n|   | | |\n+ +-+ + +\n|     | |\n+-+ +-+ +\n|     | |\n+-+-+-+-+\n\n")
+      m = Maze.new
+      m.load('11111111110001000111101010110001010110111010110000010111101110110000010111111111')
+      m.display
+    end
   end
 
   context '#display' do
@@ -39,21 +44,5 @@ describe Maze do
 
   context '#redesign' do
     
-  end
-
-  context '#add_cell' do
-    it 'adds a cell to an empty maze' do
-      test_cell = Cell.new(1, 2)
-      test_maze = Maze.new(3, 3)
-      expect test_maze.add_cell(test_cell).to_not raise_error
-    end
-  end
-
-  context '#left_corner' do
-    it 'returns the left corner index of a cell' do
-      test_cell = Cell.new(1, 2)
-      test_maze = Maze.new(3, 3)
-      expect test_maze.left_corner(test_cell).to eq(30)
-    end
   end
 end

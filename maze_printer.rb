@@ -1,6 +1,6 @@
 # maze_printer.rb
 # Written by: Noranda Brown
-# Version: 2014.2.3
+# Version: 2014.2.5
 
 class MazePrinter
 

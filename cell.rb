@@ -1,6 +1,6 @@
 # cell.rb
 # Written by: Noranda Brown
-# Version: 2014.2.2
+# Version: 2014.2.5
 
 class Cell
 
@@ -40,5 +40,21 @@ class Cell
   def has_left_cell?
     result = @connected_cells.select { |cell| cell.x == @x - 1 && cell.y == @y }
     !result.empty?
+  end
+
+  ##
+  # Connects the cell to it's right cell and it's right cell to the cell. Assumes there
+  # is a cell to the right and that it is connected.
+  def connect_right_cell(right_cell)
+    cell.connected_cells << right_cell
+    right_cell.connected_cells << cell
+  end
+
+  ##
+  # Connects the given cell to it's top cell and it's top cell to the cell. Assumes there
+  # is a cell to the top and that it is connected.
+  def connect_top_cell(top_cell)
+    cell.connected_cells << top_cell
+    top_cell.connected_cells << cell
   end
 end
