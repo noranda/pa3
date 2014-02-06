@@ -48,4 +48,10 @@ class Cell
     @connected_cells << cell
     cell.connected_cells << self
   end
+
+  ##
+  # Returns the distance from the cell to the given cell.
+  def distance_to(cell)
+    (@x - cell.x).abs + (@y - cell.y).abs
+  end
 end

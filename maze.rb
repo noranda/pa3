@@ -4,6 +4,8 @@
 
 require_relative 'cell'
 require_relative 'maze_printer'
+require_relative 'maze_solver'
+require_relative 'maze_solver_cell'
 
 class Maze
 
@@ -22,7 +24,7 @@ class Maze
   end
 
   ##
-  # Loads a maze with the given string argument of 0's (for spaces) and 1's (for walls).
+  # Loads a maze with the given string argument of 0's (for spaces) and 1's (for walls) and returns the maze.
   def load(string_maze)
     binary_array = string_maze.split('').map(&:to_i)
     binary_array.each do |n|
@@ -34,6 +36,7 @@ class Maze
         end
       end
     end
+    self
   end
 
   ##

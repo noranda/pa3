@@ -5,6 +5,8 @@
 require 'spec_helper'
 require_relative '../maze'
 require_relative '../cell'
+require_relative '../maze_printer'
+require_relative '../maze_solver'
 
 describe Maze do
 
