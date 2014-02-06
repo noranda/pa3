@@ -4,9 +4,10 @@
 
 class MazePrinter
 
-  def initialize(maze)
+  def initialize(maze, cell = nil)
     @maze = maze
     @maze_string = ''
+    @cell = cell
   end
 
   def print_maze
@@ -19,15 +20,32 @@ class MazePrinter
   end
 
   def add_rows
-    @maze.cells.map do |row|
-      (0...row.length).each do |n|
-        @maze_string << '+' << (row[n].has_top_cell? ? ' ' : '-')
+    @maze.cells.each_with_index do |row, row_index|
+      (0...row.length).each do |col_index|
+        @maze_string << '+' << (row[col_index].has_top_cell? ? ' ' : '-')
       end
       @maze_string << "+\n"
-      (0...row.length).each do |n|
-        @maze_string << (row[n].has_left_cell? ? ' ' : '|') << ' '
+      (0...row.length).each do |col_index|
+        @maze_string << (row[col_index].has_left_cell? ? ' ' : '|') << cell_marker(row_index, col_index)
       end
       @maze_string << "|\n"
+    end
+  end
+
+  ##
+  # Returns a space if @cell = nil and an X if not.
+  def cell_marker(row_index, col_index)
+    if !@cell.nil? && @cell.x == col_index && @cell.y == row_index
+      'X'
+    else
+      ' '
+    end
+  end
+
+  def self.print_trace(maze, trace_array)
+    trace_array.reverse.each do |cell|
+      mp = MazePrinter.new(maze, cell)
+      mp.print_maze
     end
   end
 end

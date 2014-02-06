@@ -7,6 +7,7 @@ require_relative '../maze'
 require_relative '../cell'
 require_relative '../maze_printer'
 require_relative '../maze_solver'
+require_relative '../maze_solver_cell'
 
 describe Maze do
 

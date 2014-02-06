@@ -17,10 +17,10 @@ describe MazeSolver do
   end
 
   context '#solve' do
-    it 'returns true if a maze is solvable' do
+    it 'returns an array if a maze is solvable' do
       maze = Maze.new(2, 2).load('1111110001111011010111111')
       ms = MazeSolver.new(maze)
-      expect(ms.solve(maze.cells[0][0], maze.cells[1][1])).to eq(true)
+      expect(ms.solve(maze.cells[0][0], maze.cells[1][1])).to be_kind_of(Array)
     end
 
     it 'returns false if a maze is not solvable' do

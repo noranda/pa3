@@ -16,13 +16,17 @@ class MazeSolver
   end
 
   ##
-  # Solves a maze given a start and end cell.
+  # Solves a maze given a start and end cell. Returns true if the maze is solvable and false if not.
   def solve(start_cell, end_cell)
     @cells_to_visit << start_cell
-    trace(start_cell, end_cell)
+    result = trace(start_cell, end_cell)
+    if result == true
+      return find_path
+    end
+    return false
   end
 
-  private
+  private ##############################################################
 
   ##
   # Used in solving a maze.
@@ -35,7 +39,7 @@ class MazeSolver
       @cells_visited << MazeSolverCell.new(start_cell, @cells_visited.last) # add start cell with parent to list of cells visited
       @cells_to_visit.delete(start_cell)                                    # delete the start cell from cells to visit
       add_connections(start_cell, end_cell)
-      trace(@cells_to_visit.first, end_cell)   # recursive call
+      trace(@cells_to_visit.first, end_cell)                                # recursive call
     end
   end
 
@@ -53,5 +57,18 @@ class MazeSolver
     cell_array = []
     @cells_visited.map { |ms_cell| cell_array << ms_cell.cell }
     cell_array
+  end
+
+  ##
+  # Assumes the maze is solvable and updates the solved_path instance variable to show the path.
+  def find_path
+    current_node = @cells_visited.last
+    puts @cells_visited.inspect
+    while current_node.parent != nil do
+      @solved_path << current_node.cell
+      current_node = current_node.parent
+    end
+    @solved_path << current_node.cell
+    puts @solved_path.inspect
   end
 end

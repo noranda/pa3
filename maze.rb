@@ -12,7 +12,7 @@ class Maze
   attr_reader :height, :width, :cells
 
   ##
-  # Initializes a maze with the given height and width, or 3x3 by default, and 4 wall cells.
+  # Initializes a maze with the given height and width, or 3x3 by default, and with 4 walled cells.
   def initialize(height = 3, width = 3)
     @height = height.to_i
     @width = width.to_i
@@ -50,13 +50,20 @@ class Maze
   # Determines if there is a way to walk from a specified beginning position to a specified ending position. Returns
   # true if the maze is solvable and false if not.
   def solve(begX, begY, endX, endY)
-
+    result = maze_solver(begX, begY, endX, endY)
+    return result != false
   end
 
   ##
-  # Traces the solution to a maze by returning the positions that the solution visits.
+  # Traces the solution to a maze by returning the positions that the solution visits. Assumes solvable maze.
   def trace(begX, begY, endX, endY)
-
+    result = maze_solver(begX, begY, endX, endY)
+    if result == false
+      puts "Maze not solvable."
+    else
+      # print maze tracer
+      MazePrinter.print_trace(self, result)
+    end
   end
 
   ##
@@ -71,5 +78,16 @@ class Maze
     cell_row_index = @width * 2 * (index_row * 2 + 1)
     offset =  (index_row * 2 + 2) + (index_col * 2)
     cell_row_index + offset
+  end
+
+  private
+
+  ##
+  # Returns a solved path array if the maze is solvable or false if not.
+  def maze_solver(begX, begY, endX, endY)
+    start_cell = @cells[begY][begX]
+    end_cell = @cells[endY][endX]
+    ms = MazeSolver.new(self)
+    ms.solve(start_cell, end_cell)
   end
 end
