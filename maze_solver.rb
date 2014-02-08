@@ -1,6 +1,6 @@
 # maze_solver.rb
 # Written by: Noranda Brown
-# Version: 2014.2.5
+# Version: 2014.2.7
 
 class MazeSolver
 
@@ -29,17 +29,28 @@ class MazeSolver
   private ##############################################################
 
   ##
-  # Used in solving a maze.
+  # Traces a maze.
   def trace(start_cell, end_cell)
     if start_cell == end_cell
+      @cells_visited << MazeSolverCell.new(start_cell, parent_cell(start_cell))
       return true
     elsif @cells_to_visit.length == 0
       return false
     else
-      @cells_visited << MazeSolverCell.new(start_cell, @cells_visited.last) # add start cell with parent to list of cells visited
-      @cells_to_visit.delete(start_cell)                                    # delete the start cell from cells to visit
-      add_connections(start_cell, end_cell)
+      @cells_visited << MazeSolverCell.new(start_cell, parent_cell(start_cell)) # add start cell with parent to list of cells visited
+      @cells_to_visit.delete(start_cell)                                    # delete the start cell from cells to visit list
+      add_connections(start_cell, end_cell)                                 # add connected cells to cells to visit list
       trace(@cells_to_visit.first, end_cell)                                # recursive call
+    end
+  end
+
+  ##
+  # Returns the parent cell to a cell.
+  def parent_cell(child_cell)
+    if @cells_visited.empty?
+      return nil
+    else
+      @cells_visited.select { |cell| child_cell.connected_cells.include?(cell.cell) }.first
     end
   end
 
@@ -63,12 +74,10 @@ class MazeSolver
   # Assumes the maze is solvable and updates the solved_path instance variable to show the path.
   def find_path
     current_node = @cells_visited.last
-    puts @cells_visited.inspect
     while current_node.parent != nil do
       @solved_path << current_node.cell
       current_node = current_node.parent
     end
     @solved_path << current_node.cell
-    puts @solved_path.inspect
   end
 end

@@ -1,6 +1,6 @@
 # maze.rb
 # Written by: Noranda Brown
-# Version: 2014.2.5
+# Version: 2014.2.7
 
 require_relative 'cell'
 require_relative 'maze_printer'
@@ -27,13 +27,11 @@ class Maze
   # Loads a maze with the given string argument of 0's (for spaces) and 1's (for walls) and returns the maze.
   def load(string_maze)
     binary_array = string_maze.split('').map(&:to_i)
-    binary_array.each do |n|
-      @cells.each_with_index do |row, index_row|
-        row.each_with_index do |cell, index_col|
-          cell_index = get_cell_index(index_row, index_col)
-          cell.connect_cells(@cells[index_row][index_col + 1]) if binary_array[cell_index + 1] == 0
-          cell.connect_cells(@cells[index_row - 1][index_col]) if binary_array[cell_index - (@width * 2 + 1)] == 0
-        end
+    @cells.each_with_index do |row, index_row|
+      row.each_with_index do |cell, index_col|
+        cell_index = get_cell_index(index_row, index_col)
+        cell.connect_cells(@cells[index_row][index_col + 1]) if binary_array[cell_index + 1] == 0
+        cell.connect_cells(@cells[index_row - 1][index_col]) if binary_array[cell_index - (@width * 2 + 1)] == 0
       end
     end
     self
