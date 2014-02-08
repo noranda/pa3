@@ -7,4 +7,4 @@ Written by: Noranda Brown
 Version: 2014.2.8
 
 ### Rdoc
-Documentation can be found in the `doc/` folder.
+Documentation can be found in the `doc/` folder or [here](http://noranda.github.io/pa3).
