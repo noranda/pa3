@@ -2,7 +2,7 @@
 # Written by: Noranda Brown
 # Version: 2014.2.8
 
-require_relative 'cell'
+require_relative 'maze_cell'
 require_relative 'maze_printer'
 require_relative 'maze_solver'
 require_relative 'maze_solver_cell'
@@ -59,7 +59,6 @@ class Maze
     if result == false
       puts "Maze not solvable."
     else
-      # print maze tracer
       MazePrinter.print_trace(self, result)
     end
   end
@@ -94,7 +93,7 @@ class Maze
   def initialize_cells
     (0...@height * @width).each do |n|
       @cells[n / @width] ||= []
-      @cells[n / @width][n % @width] = Cell.new(n % @width, n / @width)
+      @cells[n / @width][n % @width] = MazeCell.new(n % @width, n / @width)
     end
   end
 end

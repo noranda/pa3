@@ -1,12 +1,8 @@
 # maze_solver_spec.rb
 # Written by: Noranda Brown
-# Version: 2014.2.7
+# Version: 2014.2.8
 
 require 'spec_helper'
-require_relative '../maze'
-require_relative '../cell'
-require_relative '../maze_printer'
-require_relative '../maze_solver'
 
 describe MazeSolver do
 

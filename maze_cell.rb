@@ -1,13 +1,13 @@
-# cell.rb
+# maze_cell.rb
 # Written by: Noranda Brown
-# Version: 2014.2.7
+# Version: 2014.2.8
 
-class Cell
+class MazeCell
 
-  attr_accessor :x, :y, :connected_cells
+  attr_reader :x, :y, :connected_cells
 
   ##
-  # Initializes a cell object.
+  # Initializes a cell object with its x and y coordinates.
   def initialize(x, y)
     @x = x
     @y = y
@@ -22,29 +22,11 @@ class Cell
   end
 
   ##
-  # Returns true if the cell has a connected cell to the right and false otherwise.
-  def has_right_cell?
-    result = @connected_cells.select { |cell| cell.x == @x + 1 && cell.y == @y }
-    !result.empty?
-  end
-
-  ##
-  # Returns true if the cell has a connected cell to the bottom and false otherwise.
-  def has_bottom_cell?
-    result = @connected_cells.select { |cell| cell.x == @x && cell.y == @y + 1 }
-    !result.empty?
-  end
-
-  ##
   # Returns true if the cell has a connected cell to the left and false otherwise.
   def has_left_cell?
     result = @connected_cells.select { |cell| cell.x == @x - 1 && cell.y == @y }
     !result.empty?
   end
-
-  ##
-  #
-
 
   ##
   # Connects the cell to the given cell and the given cell to the cell.

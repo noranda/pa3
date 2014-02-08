@@ -1,13 +1,8 @@
 # maze_spec.rb
 # Written by: Noranda Brown
-# Version: 2014.2.7
+# Version: 2014.2.8
 
 require 'spec_helper'
-require_relative '../maze'
-require_relative '../cell'
-require_relative '../maze_printer'
-require_relative '../maze_solver'
-require_relative '../maze_solver_cell'
 
 describe Maze do
 
@@ -31,7 +26,7 @@ describe Maze do
   end
 
   context '#display' do
-    it 'can print a basic 3x3 maze' do
+    it 'can print a basic 3 x 3 maze' do
       $stdout.should_receive(:puts).with("+-+-+-+\n| | | |\n+-+-+-+\n| | | |\n+-+-+-+\n| | | |\n+-+-+-+\n\n")
       Maze.new.display
     end
@@ -65,6 +60,11 @@ describe Maze do
   end
 
   context '#redesign' do
-    
+    it 'redesigns a maze to be a new random valid maze of the same size' do
+      m = Maze.new(2, 2).load('1111110001111011010111111')
+      m.redesign
+      mg = MazeGenerator.new(m)
+      expect(mg.send(:valid_maze?, m)).to eq(true)
+    end
   end
 end
