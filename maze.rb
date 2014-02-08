@@ -27,13 +27,7 @@ class Maze
   def load(string_maze)
     initialize_cells                                              # resets cells to have no connecting cells
     binary_array = string_maze.split('').map(&:to_i)              # converts the string into an array of integers
-    @cells.each_with_index do |row, index_row|                    # connects connecting cells to one another
-      row.each_with_index do |cell, index_col|
-        cell_index = get_cell_index(index_row, index_col)
-        cell.connect_cells(@cells[index_row][index_col + 1]) if binary_array[cell_index + 1] == 0
-        cell.connect_cells(@cells[index_row - 1][index_col]) if binary_array[cell_index - (@width * 2 + 1)] == 0
-      end
-    end
+    load_connected_cells(binary_array)
     self                                                          # returns the maze
   end
 
@@ -89,11 +83,23 @@ class Maze
   end
 
   ##
-  # Initializes the cells of the maze to be a 2D array of 4-wall cells.
+  # Initializes the cells of the maze to be a 2D array of 4-wall cells. Used in initialize and load.
   def initialize_cells
     (0...@height * @width).each do |n|
       @cells[n / @width] ||= []
       @cells[n / @width][n % @width] = MazeCell.new(n % @width, n / @width)
+    end
+  end
+
+  ##
+  # Connects the connecting cells in the given binary array to one another. Used in load.
+  def load_connected_cells(binary_array)
+    @cells.each_with_index do |row, index_row|                    # connects connecting cells to one another
+      row.each_with_index do |cell, index_col|
+        cell_index = get_cell_index(index_row, index_col)
+        cell.connect_cells(@cells[index_row][index_col + 1]) if binary_array[cell_index + 1] == 0
+        cell.connect_cells(@cells[index_row - 1][index_col]) if binary_array[cell_index - (@width * 2 + 1)] == 0
+      end
     end
   end
 end
