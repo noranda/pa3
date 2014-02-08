@@ -38,21 +38,33 @@ describe Maze do
   end
 
   context '#solve' do
+    it 'returns false if a maze cannot be solved' do
+      m = Maze.new
+      expect(m.solve(0, 0, 2, 2)).to eq(false)
+    end
 
+    it 'returns true if a maze can be solved' do
+      m = Maze.new(4, 4)
+      m.load('11111111110001000111101010110001010110111010110000010111101110110000010111111111')
+      expect(m.solve(0, 0, 3, 3)).to eq(true)
+    end
   end
 
   context '#trace' do
+    it 'prints the trace of a solvable maze to the console' do
+      $stdout.should_receive(:puts).with("+-+-+\n|X  |\n+-+ +\n| | |\n+-+-+\n\n")
+      $stdout.should_receive(:puts).with("+-+-+\n|  X|\n+-+ +\n| | |\n+-+-+\n\n")
+      $stdout.should_receive(:puts).with("+-+-+\n|   |\n+-+ +\n| |X|\n+-+-+\n\n")
+      Maze.new(2, 2).load('1111110001111011010111111').trace(0, 0, 1, 1)
+    end
 
+    it 'prints "Maze not solvable" to the console for an unsolvable maze' do
+      $stdout.should_receive(:puts).with('Maze not solvable.')
+      Maze.new.trace(0, 0, 1, 1)
+    end
   end
 
   context '#redesign' do
     
-  end
-
-  context '#get_cell_index' do
-    it 'can get the cell index from the string representation for a cell' do
-      m = Maze.new
-      expect(m.get_cell_index(1, 1)).to eq(24)
-    end
   end
 end

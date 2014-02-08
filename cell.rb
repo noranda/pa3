@@ -43,6 +43,10 @@ class Cell
   end
 
   ##
+  #
+
+
+  ##
   # Connects the cell to the given cell and the given cell to the cell.
   def connect_cells(cell)
     @connected_cells << cell
